@@ -1,0 +1,24 @@
+runtime: nodejs18
+service: frontend
+instance_class: F4
+handlers:
+  - url: /static
+    static_dir: build/static
+  
+  - url: /(\w*)/css/(.*\.css)$
+    mime_type: text/css
+    static_files: build/\1
+    upload: build/.*\.(css)$
+
+  - url: /(\w*)/js/(.*\.js)$
+    mime_type: text/javascript
+    static_files: build/\1
+    upload: build/.*\.(js)$
+
+  - url: /(.*\.(json|ico|svg|png|jpg))$
+    static_files: build/\1
+    upload: build/.*\.(json|ico|svg|css|png|jpg)$
+
+  - url: /.*
+    static_files: build/index.html
+    upload: build/index.html
